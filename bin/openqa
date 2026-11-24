@@ -1,0 +1,65 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+require __DIR__ . '/../src/Audit.php';
+require __DIR__ . '/../src/Http.php';
+
+use OpenQA\Audit;
+use OpenQA\Http;
+
+$args = array_slice($argv, 1);
+if ($args === [] || $args === ['--help']) {
+    echo "Usage: php bin/openqa html FILE | url URL --authorized [--json]\n";
+    exit($args === [] ? 2 : 0);
+}
+$json = in_array('--json', $args, true);
+$authorized = in_array('--authorized', $args, true);
+$args = array_values(array_filter($args, static fn($arg) => !in_array($arg, ['--json', '--authorized'], true)));
+try {
+    if (count($args) !== 2) {
+        throw new InvalidArgumentException('Expected a mode and target; see --help.');
+    }
+    [$mode, $target] = $args;
+    $report = ['mode' => $mode, 'issues' => []];
+    if ($mode === 'html') {
+        if (!is_file($target) || filesize($target) > 2 * 1024 * 1024) {
+            throw new RuntimeException('Expected a local HTML file of at most 2 MiB.');
+        }
+        $html = file_get_contents($target);
+        if ($html === false || trim($html) === '') {
+            throw new RuntimeException('Unable to read nonempty HTML.');
+        }
+        $report['issues'] = Audit::html($html);
+    } elseif ($mode === 'url') {
+        if (!$authorized) {
+            throw new InvalidArgumentException('Confirm permission with --authorized.');
+        }
+        $result = Http::get($target);
+        $report['status'] = $result['status'];
+        $report['elapsed_ms'] = $result['elapsed_ms'];
+        $report['issues'] = Audit::headers($result['headers'], $result['scheme']);
+        if ($result['status'] < 200 || $result['status'] >= 300) {
+            $report['issues'][] = ['code' => 'http_status', 'message' => 'Non-2xx HTTP response: ' . $result['status']];
+        } elseif (str_contains(strtolower($result['headers']['content-type'] ?? ''), 'text/html') && trim($result['body']) !== '') {
+            $report['issues'] = array_merge($report['issues'], Audit::html($result['body']));
+        }
+    } else {
+        throw new InvalidArgumentException('Unknown mode.');
+    }
+    $report['issue_count'] = count($report['issues']);
+    if ($json) {
+        echo json_encode($report, JSON_PRETTY_PRINT | JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR) . PHP_EOL;
+    } else {
+        echo 'Findings: ' . $report['issue_count'] . PHP_EOL;
+        if (isset($report['status'])) {
+            echo 'HTTP ' . $report['status'] . ' in ' . $report['elapsed_ms'] . ' ms' . PHP_EOL;
+        }
+        foreach ($report['issues'] as $issue) {
+            echo '[' . $issue['code'] . '] ' . preg_replace('/[\x00-\x1F\x7F]/', '?', $issue['message']) . PHP_EOL;
+        }
+    }
+    exit($report['issue_count'] > 0 ? 1 : 0);
+} catch (Throwable $e) {
+    fwrite(STDERR, 'Error: ' . preg_replace('/[\x00-\x1F\x7F]/', '?', $e->getMessage()) . PHP_EOL);
+    exit(2);
+}

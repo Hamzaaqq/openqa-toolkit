@@ -1,0 +1,27 @@
+name: PHP checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.2', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl
+          coverage: none
+      - run: php -l src/Audit.php && php -l src/Http.php && php -l bin/openqa
+      - run: php tests/run.php
+      - name: CLI sample
+        run: |
+          set +e
+          php bin/openqa html examples/sample.html --json > report.json
+          code=$?
+          set -e
+          test "$code" = 1
+          php -r '$r=json_decode(file_get_contents("report.json"),true,512,JSON_THROW_ON_ERROR); if ($r["issue_count"] !== 3) exit(1);'

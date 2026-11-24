@@ -1,0 +1,17 @@
+{
+  "name": "hamzaaqq/openqa-toolkit",
+  "description": "Small CLI for repeatable web quality checks",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": ">=8.2",
+    "ext-dom": "*",
+    "ext-curl": "*"
+  },
+  "bin": [
+    "bin/openqa"
+  ],
+  "scripts": {
+    "test": "php tests/run.php"
+  }
+}
