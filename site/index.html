@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practical website quality checks | OpenQA Toolkit</title>
+<meta name="description" content="Open-source PHP CLI for HTML quality checks, HTTP headers, Laravel Blade auditing and GitHub Actions.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Practical website quality checks | OpenQA Toolkit">
+<meta property="og:description" content="Open-source PHP CLI for HTML quality checks, HTTP headers, Laravel Blade auditing and GitHub Actions.">
+<meta property="og:url" content="https://hamzaaqq.github.io/openqa-toolkit/">
+<meta name="theme-color" content="#112b2a">
+<link rel="canonical" href="https://hamzaaqq.github.io/openqa-toolkit/">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell nav">
+<a class="brand" href="./"><img src="assets/mark.svg" width="34" height="34" alt=""><span>OpenQA<span class="muted"> Toolkit</span></span></a>
+<nav aria-label="Main navigation"><a href="guide.html">Quick start</a><a href="integrations.html">Integrations</a><a href="contribute.html">Contribute</a><a class="github" href="https://github.com/Hamzaaqq/openqa-toolkit">GitHub ↗</a></nav>
+</div></header>
+<main id="main" class="shell">
+<section class="hero"><div><p class="eyebrow"><span class="dot"></span> Open source · PHP 8.2+ · MIT</p>
+<h1>Catch the small things<br>before they ship.</h1>
+<p class="lead">Repeatable HTML quality checks for developers and QA learners. Run locally, audit Blade templates, or add a lightweight check to your CI pipeline.</p>
+<div class="buttons"><a class="btn primary" href="guide.html">Get started</a><a class="btn secondary" href="https://github.com/Hamzaaqq/openqa-toolkit">Explore the source ↗</a></div>
+<p class="small">First release <a href="https://github.com/Hamzaaqq/openqa-toolkit/releases/tag/v0.1.0">v0.1.0</a> · <a href="https://packagist.org/packages/hamzaaqq/openqa-toolkit">Composer package</a></p></div>
+<div class="terminal"><div class="terminal-top"><span>● ● ●</span><span>Local HTML audit</span></div><pre><code><span class="prompt">$</span> php bin/openqa html examples/sample.html --json
+
+{
+  "mode": "html",
+  "issues": [
+    { "code": "missing_alt", ... },
+    { "code": "duplicate_id", ... },
+    { "code": "missing_fragment", ... }
+  ],
+  "issue_count": 3
+}</code></pre><div class="terminal-foot">Illustrative output · 3 intentional findings</div></div></section>
+<section class="section"><p class="eyebrow">What it checks</p><h2>Small, focused, actionable.</h2>
+<div class="cards"><article><span class="num">01 / HTML</span><h3>Document quality</h3><p>Spot missing titles, language declarations and image alt attributes, duplicate IDs and unresolved local anchors.</p></article><article><span class="num">02 / HTTP</span><h3>Response review</h3><p>On authorized targets, inspect HTTP status, request timing and advisory security headers using one GET request.</p></article><article><span class="num">03 / CI</span><h3>Repeatable reports</h3><p>Use JSON output, documented exit codes, Laravel integration and a reusable GitHub composite action.</p></article></div></section>
+<section class="section split"><div><p class="eyebrow">Start here</p><h2>Your first audit.</h2><p>Install PHP with DOM and cURL. Try the included fixture without accessing a live website.</p><a href="guide.html">Read the full installation guide →</a></div><div class="code"><pre><code>git clone https://github.com/Hamzaaqq/openqa-toolkit.git
+cd openqa-toolkit
+php bin/openqa html examples/sample.html --json</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div></section>
+<section class="notice"><h2>Know the limits.</h2><p>OpenQA is an early-stage heuristic checker, not a full accessibility or security audit. It does not execute JavaScript, crawl sites or verify external links. Only audit systems you own or have permission to test.</p></section>
+<section class="section split"><div><p class="eyebrow">Community</p><h2>Make it better with us.</h2><p>Try the offline example and tell us what worked. Reproducible issues, tests and documentation improvements are welcome.</p></div><div class="buttons"><a class="btn primary" href="contribute.html">Contribution guide</a><a class="btn secondary" href="https://github.com/Hamzaaqq/openqa-toolkit/issues">Open issues ↗</a></div></section></main><footer><div class="shell footer"><p>OpenQA Toolkit · MIT licensed · Community feedback welcome.</p><nav aria-label="Footer"><a href="https://github.com/Hamzaaqq/openqa-toolkit/releases">Releases</a><a href="https://packagist.org/packages/hamzaaqq/openqa-toolkit">Packagist</a><a href="https://github.com/Hamzaaqq/openqa-toolkit/blob/main/SECURITY.md">Security</a></nav></div></footer></body></html>

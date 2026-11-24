@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation and first audit | OpenQA Toolkit</title>
+<meta name="description" content="Install OpenQA Toolkit with PHP and Composer, run a local HTML audit, and interpret findings.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Installation and first audit | OpenQA Toolkit">
+<meta property="og:description" content="Install OpenQA Toolkit with PHP and Composer, run a local HTML audit, and interpret findings.">
+<meta property="og:url" content="https://hamzaaqq.github.io/openqa-toolkit/guide.html">
+<meta name="theme-color" content="#112b2a">
+<link rel="canonical" href="https://hamzaaqq.github.io/openqa-toolkit/guide.html">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell nav">
+<a class="brand" href="./"><img src="assets/mark.svg" width="34" height="34" alt=""><span>OpenQA<span class="muted"> Toolkit</span></span></a>
+<nav aria-label="Main navigation"><a href="guide.html">Quick start</a><a href="integrations.html">Integrations</a><a href="contribute.html">Contribute</a><a class="github" href="https://github.com/Hamzaaqq/openqa-toolkit">GitHub ↗</a></nav>
+</div></header>
+<main id="main" class="shell">
+<div class="page-title"><p class="eyebrow">Documentation / 01</p><h1>Quick start</h1><p class="lead">From installation to your first reproducible audit.</p></div>
+<div class="doc-grid"><aside><nav aria-label="On this page"><a href="#requirements">Requirements</a><a href="#install">Install</a><a href="#exercise">First audit</a><a href="#url">HTTP mode</a><a href="#results">Exit codes</a></nav></aside><div class="prose">
+<section id="requirements"><h2>Requirements</h2><p>PHP 8.2 or later, DOM and cURL extensions. Composer is optional for the standalone checkout.</p><div class="code"><pre><code>php -v
+php -m</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div></section>
+<section id="install"><h2>Install</h2><h3>Composer</h3><p>Use the published package in a development project. If indexing is not complete, use the Git checkout below.</p><div class="code"><pre><code>composer require --dev hamzaaqq/openqa-toolkit:^0.1
+vendor/bin/openqa --version</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div><p>Windows Command Prompt:</p><div class="code"><pre><code>vendor\bin\openqa.bat --version</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div><h3>Git checkout</h3><div class="code"><pre><code>git clone https://github.com/Hamzaaqq/openqa-toolkit.git
+cd openqa-toolkit
+php bin/openqa --version</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div></section>
+<section id="exercise"><h2>First audit: offline exercise</h2><div class="code"><pre><code>php bin/openqa html examples/sample.html --json</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div><p>Expect three intentional findings: a missing image alt attribute, duplicate ID and missing local anchor. Copy the fixture to a scratch file, fix each finding, and audit it again. Expect zero findings. Use meaningful alt text or empty alt for decorative images.</p></section>
+<section id="url"><h2>Authorized HTTP checks</h2><p>Only use this mode with permission. Replace the example URL with your authorized target.</p><div class="code"><pre><code>php bin/openqa url https://example.com --authorized --json</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div><p>One GET request, no redirects, 15-second timeout, 2 MiB response limit. HTML checks run on successful HTML responses. Missing CSP, Referrer-Policy, X-Content-Type-Options and HTTPS HSTS are advisory findings. Timing is not browser performance.</p><p>Never expose the URL checker as a public service; it can reach local or private networks.</p></section>
+<section id="results"><h2>Interpret exit codes</h2><table><caption class="sr">OpenQA exit codes</caption><thead><tr><th scope="col">Code</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>0</td><td>No findings</td></tr><tr><td>1</td><td>Findings require review</td></tr><tr><td>2</td><td>Usage or operational error</td></tr></tbody></table><p>In PowerShell check <code>$LASTEXITCODE</code>. Findings do not establish accessibility compliance or security vulnerabilities.</p><a href="integrations.html">Next: Laravel and GitHub Actions →</a></section></div></div></main><footer><div class="shell footer"><p>OpenQA Toolkit · MIT licensed · Community feedback welcome.</p><nav aria-label="Footer"><a href="https://github.com/Hamzaaqq/openqa-toolkit/releases">Releases</a><a href="https://packagist.org/packages/hamzaaqq/openqa-toolkit">Packagist</a><a href="https://github.com/Hamzaaqq/openqa-toolkit/blob/main/SECURITY.md">Security</a></nav></div></footer></body></html>

@@ -4,6 +4,8 @@
 
 A small open-source PHP command-line tool for repeatable website quality checks. Designed for QA learners and developers who want actionable findings without a large framework.
 
+Documentation website source lives in [site/](site/). See the [Pages deployment workflow](.github/workflows/pages.yml) for publication status.
+
 ## Quick start
 
 Requires PHP 8.2+ with DOM and cURL extensions. No external PHP packages needed.
@@ -32,14 +34,14 @@ Exit codes: 0 no findings; 1 findings; 2 usage or operational error. JSON mode i
 
 ## Install as a Composer CLI
 
-Until the package is published to Packagist, install from the Git repository in a separate project:
+The package is registered on [Packagist](https://packagist.org/packages/hamzaaqq/openqa-toolkit). Install the published release in a separate project with `composer require --dev hamzaaqq/openqa-toolkit:^0.1`. Alternatively, install from Git:
 
 ```sh
 composer config repositories.openqa vcs https://github.com/Hamzaaqq/openqa-toolkit
 composer require --dev hamzaaqq/openqa-toolkit:dev-main
 ```
 
-Run `vendor/bin/openqa --version` (Windows Command Prompt: `vendor\bin\openqa.bat --version`). Once a release is tagged and the package appears on Packagist, the normal installation command will be `composer require --dev hamzaaqq/openqa-toolkit:^0.1`.
+Run `vendor/bin/openqa --version` (Windows Command Prompt: `vendor\bin\openqa.bat --version`). See the [v0.1.0 release](https://github.com/Hamzaaqq/openqa-toolkit/releases/tag/v0.1.0).
 
 See [the first audit tutorial](docs/tutorial.md) for a practical offline exercise and [release checklist](docs/releasing.md) for publication steps.
 

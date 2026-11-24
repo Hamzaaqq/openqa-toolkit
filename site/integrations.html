@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laravel and GitHub Actions | OpenQA Toolkit</title>
+<meta name="description" content="Run OpenQA against rendered Laravel Blade views and local HTML files in GitHub Actions.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Laravel and GitHub Actions | OpenQA Toolkit">
+<meta property="og:description" content="Run OpenQA against rendered Laravel Blade views and local HTML files in GitHub Actions.">
+<meta property="og:url" content="https://hamzaaqq.github.io/openqa-toolkit/integrations.html">
+<meta name="theme-color" content="#112b2a">
+<link rel="canonical" href="https://hamzaaqq.github.io/openqa-toolkit/integrations.html">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell nav">
+<a class="brand" href="./"><img src="assets/mark.svg" width="34" height="34" alt=""><span>OpenQA<span class="muted"> Toolkit</span></span></a>
+<nav aria-label="Main navigation"><a href="guide.html">Quick start</a><a href="integrations.html">Integrations</a><a href="contribute.html">Contribute</a><a class="github" href="https://github.com/Hamzaaqq/openqa-toolkit">GitHub ↗</a></nav>
+</div></header>
+<main id="main" class="shell">
+<div class="page-title"><p class="eyebrow">Documentation / 02</p><h1>Integrations</h1><p class="lead">Bring lightweight quality checks into the tools you already use.</p></div>
+<div class="doc-grid"><aside><nav aria-label="On this page"><a href="#laravel">Laravel</a><a href="#actions">GitHub Actions</a><a href="#verification">Verification</a></nav></aside><div class="prose">
+<section id="laravel"><h2>Laravel 12 and 13</h2><p>The optional package provider automatically registers an Artisan command for auditing rendered Blade views.</p><div class="code"><pre><code>composer require --dev hamzaaqq/openqa-toolkit:^0.1
+php artisan openqa:view welcome --json</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div><p>Use a view that renders without required data. If discovery is disabled, register <code>OpenQA\Laravel\OpenQAServiceProvider::class</code> in <code>bootstrap/providers.php</code> for your development environment. Only render trusted application code; this is not a sandbox. It does not exercise routes or browser behavior.</p><p>See the <a href="https://github.com/Hamzaaqq/openqa-toolkit/blob/main/docs/laravel.md">full Laravel documentation</a>.</p></section>
+<section id="actions"><h2>GitHub Actions</h2><p>Check a generated or checked-in HTML file in a Linux workflow. Set up PHP first. The sample uses the published v0.1.0 tag; for production pin actions to reviewed commit SHAs.</p><div class="code"><pre><code>name: HTML quality
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom, curl
+          coverage: none
+      - uses: Hamzaaqq/openqa-toolkit@v0.1.0
+        id: audit
+        with:
+          file: public/index.html
+          fail-on-findings: 'true'</code></pre><button type="button" class="copy" hidden>Copy</button><span class="sr" role="status"></span></div><p>Change the file path to match your project. Outputs are <code>issue-count</code> and <code>report-path</code>. Setting <code>fail-on-findings</code> to false keeps findings advisory; operational errors still fail. Avoid uploading confidential reports.</p><p><a href="https://github.com/Hamzaaqq/openqa-toolkit/blob/main/docs/github-action.md">Full action guide and artifact example</a></p></section>
+<section id="verification"><h2>Verify compatibility</h2><p>View actual <a href="https://github.com/Hamzaaqq/openqa-toolkit/actions">CI results</a> for core PHP, Laravel and composite action tests. The standalone CLI does not require Laravel. The action audits local files without making network requests.</p></section></div></div></main><footer><div class="shell footer"><p>OpenQA Toolkit · MIT licensed · Community feedback welcome.</p><nav aria-label="Footer"><a href="https://github.com/Hamzaaqq/openqa-toolkit/releases">Releases</a><a href="https://packagist.org/packages/hamzaaqq/openqa-toolkit">Packagist</a><a href="https://github.com/Hamzaaqq/openqa-toolkit/blob/main/SECURITY.md">Security</a></nav></div></footer></body></html>

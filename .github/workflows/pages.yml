@@ -1,0 +1,48 @@
+name: Website checks and Pages deployment
+on:
+  push:
+    branches: [main]
+    paths: ['site/**', 'tests/site_check.py', '.github/workflows/pages.yml']
+  pull_request:
+    paths: ['site/**', 'tests/site_check.py', '.github/workflows/pages.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tests/site_check.py
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom, curl
+          coverage: none
+      - name: Audit all site pages with OpenQA
+        run: |
+          for file in site/*.html; do
+            php bin/openqa html "$file"
+          done
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        with:
+          path: site
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - name: Deploy checked website
+        id: deployment
+        uses: actions/deploy-pages@v4
