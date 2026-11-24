@@ -8,6 +8,10 @@ use OpenQA\Audit;
 use OpenQA\Http;
 
 $args = array_slice($argv, 1);
+if ($args === ['--version']) {
+    echo "OpenQA Toolkit 0.1.0\n";
+    exit(0);
+}
 if ($args === [] || $args === ['--help']) {
     echo "Usage: php bin/openqa html FILE | url URL --authorized [--json]\n";
     exit($args === [] ? 2 : 0);

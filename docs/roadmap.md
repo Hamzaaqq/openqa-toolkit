@@ -12,6 +12,7 @@
 - Same-origin link checking with explicit request limits
 - Accessible HTML reports
 - Browser-based checks with a dedicated test harness
-- Package release and versioned changelog
+- Publish the first tagged release and register on Packagist after release checks pass
+- Collect genuine user feedback on Windows and Linux installation
 
 These are proposals, not delivered features. Prioritize based on reproducible user feedback.

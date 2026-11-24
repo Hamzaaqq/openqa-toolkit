@@ -1,7 +1,7 @@
 {
   "name": "hamzaaqq/openqa-toolkit",
   "description": "Small CLI for repeatable web quality checks",
-  "type": "project",
+  "type": "library",
   "license": "MIT",
   "require": {
     "php": ">=8.2",
@@ -13,5 +13,17 @@
   ],
   "scripts": {
     "test": "php tests/run.php"
+  },
+  "keywords": [
+    "qa",
+    "html",
+    "accessibility",
+    "cli",
+    "testing"
+  ],
+  "homepage": "https://github.com/Hamzaaqq/openqa-toolkit",
+  "support": {
+    "issues": "https://github.com/Hamzaaqq/openqa-toolkit/issues",
+    "source": "https://github.com/Hamzaaqq/openqa-toolkit"
   }
 }

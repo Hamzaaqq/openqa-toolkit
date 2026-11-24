@@ -16,7 +16,17 @@ jobs:
           extensions: dom, curl
           coverage: none
       - run: php -l src/Audit.php && php -l src/Http.php && php -l bin/openqa
+      - run: composer validate --strict
       - run: php tests/run.php
+      - run: php bin/openqa --version
+      - name: Composer consumer installation
+        run: |
+          mkdir "$RUNNER_TEMP/openqa-consumer"
+          cd "$RUNNER_TEMP/openqa-consumer"
+          composer init --name=openqa/consumer --no-interaction
+          composer config repositories.openqa path "$GITHUB_WORKSPACE"
+          composer require --dev 'hamzaaqq/openqa-toolkit:@dev' --no-interaction
+          test "$(vendor/bin/openqa --version)" = 'OpenQA Toolkit 0.1.0'
       - name: CLI sample
         run: |
           set +e
