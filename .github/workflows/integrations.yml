@@ -1,0 +1,68 @@
+name: Integration checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  laravel:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - php: '8.2'
+            testbench: '^10.0'
+          - php: '8.4'
+            testbench: '^11.0'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, mbstring
+          coverage: none
+      - name: Install framework test dependencies
+        env:
+          TESTBENCH: ${{ matrix.testbench }}
+        run: composer update --with "orchestra/testbench:$TESTBENCH" --no-interaction --prefer-dist
+      - run: vendor/bin/phpunit --bootstrap vendor/autoload.php tests/Laravel
+  composite-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom, curl
+          coverage: none
+      - uses: ./
+        id: clean
+        with:
+          file: examples/clean.html
+      - uses: ./
+        id: findings
+        with:
+          file: examples/sample.html
+          fail-on-findings: 'false'
+      - uses: ./
+        id: strict
+        continue-on-error: true
+        with:
+          file: examples/sample.html
+      - uses: ./
+        id: missing
+        continue-on-error: true
+        with:
+          file: examples/nonexistent.html
+          fail-on-findings: 'false'
+      - name: Verify outputs and failure policy
+        env:
+          CLEAN: ${{ steps.clean.outputs.issue-count }}
+          FINDINGS: ${{ steps.findings.outputs.issue-count }}
+          REPORT: ${{ steps.findings.outputs.report-path }}
+          STRICT: ${{ steps.strict.outcome }}
+          MISSING: ${{ steps.missing.outcome }}
+        run: |
+          test "$CLEAN" = 0
+          test "$FINDINGS" = 3
+          test "$STRICT" = failure
+          test "$MISSING" = failure
+          php -r '$r=json_decode(file_get_contents($argv[1]),true,512,JSON_THROW_ON_ERROR); if ($r["issue_count"] !== 3) exit(1);' "$REPORT"

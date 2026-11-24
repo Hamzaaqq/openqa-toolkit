@@ -6,6 +6,8 @@
 - Opt-in single-page HTTP checks and request timing
 - Offline regression tests and PHP CI configuration
 
+- Optional Laravel Artisan view auditor and reusable HTML composite action
+
 ## Proposed next steps
 
 - Local HTTP fixture integration tests

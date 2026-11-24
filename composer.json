@@ -25,5 +25,23 @@
   "support": {
     "issues": "https://github.com/Hamzaaqq/openqa-toolkit/issues",
     "source": "https://github.com/Hamzaaqq/openqa-toolkit"
+  },
+  "autoload": {
+    "psr-4": {
+      "OpenQA\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "OpenQA\\Laravel\\OpenQAServiceProvider"
+      ]
+    }
+  },
+  "suggest": {
+    "laravel/framework": "Optional Artisan view auditing in Laravel applications (12.x or 13.x)."
+  },
+  "require-dev": {
+    "orchestra/testbench": "^10.0 || ^11.0"
   }
 }

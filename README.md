@@ -43,6 +43,13 @@ Run `vendor/bin/openqa --version` (Windows Command Prompt: `vendor\bin\openqa.ba
 
 See [the first audit tutorial](docs/tutorial.md) for a practical offline exercise and [release checklist](docs/releasing.md) for publication steps.
 
+## Integrations
+
+- [Laravel Artisan integration](docs/laravel.md): audit rendered Blade views locally with `php artisan openqa:view welcome --json`.
+- [Reusable GitHub Action](docs/github-action.md): audit generated HTML files in CI and export JSON findings.
+
+Both integrations are optional. See the [integration workflow](.github/workflows/integrations.yml) for test coverage and current CI results.
+
 ## Development
 
     php tests/run.php

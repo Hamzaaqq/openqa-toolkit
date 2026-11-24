@@ -1,0 +1,25 @@
+name: OpenQA HTML audit
+description: Audit a local HTML file and report basic quality findings.
+inputs:
+  file:
+    description: Local HTML file in the checked-out workspace.
+    required: true
+  fail-on-findings:
+    description: Fail the step when issues are found (true or false).
+    default: 'true'
+outputs:
+  issue-count:
+    description: Number of audit findings.
+    value: ${{ steps.audit.outputs.issue-count }}
+  report-path:
+    description: Temporary JSON report file path on the runner.
+    value: ${{ steps.audit.outputs.report-path }}
+runs:
+  using: composite
+  steps:
+    - id: audit
+      shell: bash
+      env:
+        OPENQA_FILE: ${{ inputs.file }}
+        OPENQA_FAIL: ${{ inputs.fail-on-findings }}
+      run: bash "$GITHUB_ACTION_PATH/scripts/action-audit.sh"
