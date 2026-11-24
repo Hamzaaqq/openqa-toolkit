@@ -1,6 +1,6 @@
 # Reusable GitHub Action
 
-This composite action checks a local HTML file after you check out your repository. Set up PHP with DOM and cURL first. Until a release tag is published, @main is usable for evaluation; pin to a reviewed full commit SHA for production.
+This composite action checks a local HTML file after you check out your repository. Set up PHP with DOM and cURL first. Use the published v0.1.0 release for evaluation; pin to a reviewed full commit SHA for production.
 
 ```yaml
 name: HTML quality
@@ -17,7 +17,7 @@ jobs:
           php-version: '8.3'
           extensions: dom, curl
           coverage: none
-      - uses: Hamzaaqq/openqa-toolkit@main
+      - uses: Hamzaaqq/openqa-toolkit@v0.1.0
         id: openqa
         with:
           file: public/index.html

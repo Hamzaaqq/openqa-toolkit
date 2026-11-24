@@ -1,8 +1,14 @@
 # OpenQA Toolkit
 
-[![PHP checks](https://github.com/Hamzaaqq/openqa-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/Hamzaaqq/openqa-toolkit/actions/workflows/ci.yml)
+[![PHP checks](https://github.com/Hamzaaqq/openqa-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/Hamzaaqq/openqa-toolkit/actions/workflows/ci.yml) [![Integration checks](https://github.com/Hamzaaqq/openqa-toolkit/actions/workflows/integrations.yml/badge.svg)](https://github.com/Hamzaaqq/openqa-toolkit/actions/workflows/integrations.yml) [![Website deployment](https://github.com/Hamzaaqq/openqa-toolkit/actions/workflows/pages.yml/badge.svg)](https://github.com/Hamzaaqq/openqa-toolkit/actions/workflows/pages.yml) [![Packagist](https://img.shields.io/packagist/v/hamzaaqq/openqa-toolkit)](https://packagist.org/packages/hamzaaqq/openqa-toolkit) [![MIT license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-A small open-source PHP command-line tool for repeatable website quality checks. Designed for QA learners and developers who want actionable findings without a large framework.
+OpenQA Toolkit is a lightweight, open-source PHP CLI for website quality assurance: HTML quality checks, accessibility-related heuristics, local anchor validation and advisory HTTP security-header review. Audit local HTML, rendered Laravel Blade views or generated pages in GitHub Actions.
+
+**[Official documentation](https://hamzaaqq.github.io/openqa-toolkit/) · [Quick start](https://hamzaaqq.github.io/openqa-toolkit/guide.html) · [Integrations](https://hamzaaqq.github.io/openqa-toolkit/integrations.html) · [Packagist](https://packagist.org/packages/hamzaaqq/openqa-toolkit) · [Contribute](https://hamzaaqq.github.io/openqa-toolkit/contribute.html)**
+
+```sh
+composer require --dev hamzaaqq/openqa-toolkit:^0.1
+```
 
 Documentation website source lives in [site/](site/). See the [Pages deployment workflow](.github/workflows/pages.yml) for publication status.
 

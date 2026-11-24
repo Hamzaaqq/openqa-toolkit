@@ -1,6 +1,6 @@
 {
   "name": "hamzaaqq/openqa-toolkit",
-  "description": "Small CLI for repeatable web quality checks",
+  "description": "Lightweight PHP CLI for HTML quality checks, accessibility heuristics, HTTP headers and Laravel/CI integration.",
   "type": "library",
   "license": "MIT",
   "require": {
@@ -19,12 +19,18 @@
     "html",
     "accessibility",
     "cli",
-    "testing"
+    "testing",
+    "website-audit",
+    "quality-assurance",
+    "laravel",
+    "github-actions",
+    "security-headers"
   ],
-  "homepage": "https://github.com/Hamzaaqq/openqa-toolkit",
+  "homepage": "https://hamzaaqq.github.io/openqa-toolkit/",
   "support": {
     "issues": "https://github.com/Hamzaaqq/openqa-toolkit/issues",
-    "source": "https://github.com/Hamzaaqq/openqa-toolkit"
+    "source": "https://github.com/Hamzaaqq/openqa-toolkit",
+    "docs": "https://hamzaaqq.github.io/openqa-toolkit/"
   },
   "autoload": {
     "psr-4": {

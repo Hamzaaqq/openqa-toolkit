@@ -1,10 +1,9 @@
 # Laravel integration
 
-OpenQA offers an optional Artisan command for Laravel 12 and 13. The standalone CLI does not need Laravel. Install into your development environment from the repository until a package release is available:
+OpenQA offers an optional Artisan command for Laravel 12 and 13. The standalone CLI does not need Laravel. Install the published release into your development environment:
 
 ```sh
-composer config repositories.openqa vcs https://github.com/Hamzaaqq/openqa-toolkit
-composer require --dev hamzaaqq/openqa-toolkit:dev-main
+composer require --dev hamzaaqq/openqa-toolkit:^0.1
 php artisan openqa:view welcome --json
 ```
 
