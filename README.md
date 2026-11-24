@@ -50,6 +50,10 @@ See [the first audit tutorial](docs/tutorial.md) for a practical offline exercis
 
 Both integrations are optional. See the [integration workflow](.github/workflows/integrations.yml) for test coverage and current CI results.
 
+## Help improve OpenQA
+
+Try the [five-minute offline exercise](docs/tutorial.md) and tell us what worked or failed on your platform. We welcome reproducible feedback and small contributions, especially [Windows installation checks](https://github.com/Hamzaaqq/openqa-toolkit/issues/1), [anchor regression tests](https://github.com/Hamzaaqq/openqa-toolkit/issues/2), and [local HTTP integration tests](https://github.com/Hamzaaqq/openqa-toolkit/issues/3). Check the issue discussion before starting work.
+
 ## Development
 
     php tests/run.php

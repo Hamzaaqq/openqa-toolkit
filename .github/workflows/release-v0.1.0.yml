@@ -1,0 +1,67 @@
+name: Publish v0.1.0
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/release-v0.1.0.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: openqa-release-v0.1.0
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: dom, curl, mbstring
+          coverage: none
+      - run: composer validate --strict
+      - run: php tests/run.php
+      - run: composer update --with 'orchestra/testbench:^11.0' --no-interaction --prefer-dist
+      - run: vendor/bin/phpunit --bootstrap vendor/autoload.php tests/Laravel
+      - uses: ./
+        id: clean
+        with:
+          file: examples/clean.html
+      - uses: ./
+        id: findings
+        with:
+          file: examples/sample.html
+          fail-on-findings: 'false'
+      - name: Verify action outputs and version
+        env:
+          CLEAN: ${{ steps.clean.outputs.issue-count }}
+          FINDINGS: ${{ steps.findings.outputs.issue-count }}
+        run: |
+          test "$CLEAN" = 0
+          test "$FINDINGS" = 3
+          test "$(php bin/openqa --version)" = 'OpenQA Toolkit 0.1.0'
+  publish:
+    if: github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create release from the verified commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          VERIFIED_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          if gh release view v0.1.0 --repo "$GH_REPO" >/dev/null 2>&1; then
+            echo 'Release already exists; leaving it unchanged.'
+            exit 0
+          fi
+          if gh api "repos/$GH_REPO/git/ref/tags/v0.1.0" >/dev/null 2>&1; then
+            echo 'Tag already exists without a release; review it manually.' >&2
+            exit 1
+          fi
+          gh release create v0.1.0 --repo "$GH_REPO" --target "$VERIFIED_SHA" --title "OpenQA Toolkit v0.1.0" --notes "First public 0.x release: offline HTML quality checks, opt-in single-page HTTP audit, JSON reports, Composer CLI, optional Laravel Blade audit, and reusable GitHub Action. Automated release verification passed on Linux. These are heuristic checks, not a comprehensive accessibility or security audit. Windows installation feedback is welcome."

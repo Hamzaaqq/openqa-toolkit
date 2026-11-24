@@ -1,17 +1,14 @@
 # Changelog
 
-## Unreleased integrations
+## 0.1.0
 
-- Optional Laravel service provider and Blade audit command.
-- Reusable offline HTML composite action with JSON report and failure policy.
-- Framework and action integration tests.
+First release candidate; publication status is tracked on the GitHub Releases page.
 
-## 0.1.0 — unreleased
-
-- Initial offline HTML audit and opt-in single-page HTTP audit.
+- Offline HTML quality checks and opt-in single-page HTTP audit.
 - Text and JSON reports with documented exit codes.
-- Composer package metadata and version command.
-- Regression tests and consumer installation checks.
-- Tutorial, contribution guide and release checklist.
+- Composer installation and standalone CLI.
+- Optional Laravel Blade audit command and service provider.
+- Reusable GitHub composite action for local HTML with JSON output and failure policy.
+- Regression tests, integration tests, tutorials and contribution guidance.
 
-This is an early release, not a full accessibility or security scanner.
+Limitations: heuristic checks only, not a complete accessibility or security audit; no crawling or browser execution.
