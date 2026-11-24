@@ -25,6 +25,7 @@ jobs:
       - name: Audit all site pages with OpenQA
         run: |
           for file in site/*.html; do
+            if [ "$file" = "site/google90f147d7580a14ef.html" ]; then continue; fi
             php bin/openqa html "$file"
           done
       - uses: actions/upload-pages-artifact@v3

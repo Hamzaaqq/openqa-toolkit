@@ -36,6 +36,9 @@ class Page(HTMLParser):
 
 pages = {}
 for path in root.glob("*.html"):
+    if path.name == "google90f147d7580a14ef.html":
+        assert path.read_text(encoding="utf-8").strip() == "google-site-verification: " + path.name
+        continue
     parser = Page()
     parser.feed(path.read_text(encoding="utf-8"))
     assert parser.has_title and parser.has_description and parser.has_main and parser.has_canonical, path
